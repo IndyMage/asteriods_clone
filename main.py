@@ -32,6 +32,10 @@ def main():
         dt = clock.tick(60) / 1000
         screen.fill((BLACK))
         updatable.update(dt)
+        for asteroid in asteroids:
+            if asteroid.check_collisions(player):
+                print("Game over!")
+                exit()
         for each in drawable:
             #print(f"Drawing {each} at {each.position} with radius {each.radius}")
             each.draw(screen)
