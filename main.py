@@ -47,6 +47,12 @@ def main():
         for each in drawable:
             #print(f"Drawing {each} at {each.position} with radius {each.radius}")
             each.draw(screen)
+
+        for asteroid in asteroids:
+            for shot in shots_group:
+                if asteroid.check_collisions(shot):
+                    asteroid.kill()
+                    shot.kill()
         pygame.display.flip()
 
 if __name__ == "__main__":
