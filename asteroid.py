@@ -18,17 +18,23 @@ class Asteroid(CircleShape):
     def update(self, dt):
         self.position += self.velocity * dt
 
-    def split(self)
+    def split(self):
         self.kill()
-        if self.radius == ASTEROID_MIN_RADIUS:
+        if self.radius <= ASTEROID_MIN_RADIUS:
+            #print("Printing the IF")
             return
         else:
             random_angle = random.uniform(20, 50)
-            positive_angle = pygame.Vector2(random_angle)
-            negative_angle = pygame.Vector2(-random_angle)
+            new_velocity1 = self.velocity.rotate(random_angle)
+            new_velocity2 = self.velocity.rotate(-random_angle)
             new_radius = self.radius - ASTEROID_MIN_RADIUS
+            #print("We are about to spawn!")
+            new_asteroid1 = Asteroid(self.position.x, self.position.y, new_radius)
+            new_asteroid2 = Asteroid(self.position.x, self.position.y, new_radius)
             
-            
-            
-            
-            pygame.draw.circle(screen, WHITE, (self.position.x, self.position.y), self.radius, 2)
+            new_asteroid1.velocity = new_velocity1 * 1.2
+            new_asteroid2.velocity = new_velocity2 * 1.2
+
+            for group in self.groups():
+                group.add(new_asteroid1)
+                group.add(new_asteroid2)
